@@ -38,8 +38,11 @@
 		#userWrapper{
 			margin-left: 20px;
 			width: 150px;
-			max-height:200px;
+			max-height:400px;
 		}
+		/*#users{
+			background-color: #dba;
+		}*/
 		input{
 			height: 25px;
 		}
@@ -65,7 +68,7 @@
 				</form>
 			</div>
 			<div class="wrapper" id="userWrapper">
-				<div class="users"></div>
+				<div id="users"></div>
 			</div>	
 		</div>	
 	</div>
@@ -79,6 +82,7 @@
 		var messageWrapper = document.getElementById("messageWrapper");
 		var usernameForm = document.getElementById("usernameForm");
 		var nameForm = document.getElementById("nameForm");
+		var users = document.getElementById("users");
 		var username = document.getElementById("username");
 		// var users = document.getElementByClass("users");
 
@@ -108,7 +112,7 @@
 		socket.on("connectUser", function(userInput){
 			messageAppend(userInput + " connected")
 		});
-		socket.on("disconnectUser",function(userInput){
+		socket.on("disconnectUser", function(userInput){
 			messageAppend(userInput + " disconnected")
 		})
 		// socket.on("new message", function(data){
@@ -130,12 +134,36 @@
 			messageAppend( data.user +": " + data.messageInput);
 		// 	//console.log(data)
 		 });
+		socket.on("users names", function(data){
+
+			//users.append(data)
+			var total=""
+			for(i=0; i<data.length; i++){
+				total+= data[i] + "<br>";
+			}	
+				users.innerHTML= total;
+			// 	users.append(data[i] +"<br>")
+			// }
+			//data.forEach(function(element){
+				//total+=element
+			//});
+			//users.html(total);
+			// for(let cat of data){
+			// 	users.append(total += cat);
+			// }
+		});
 
 		function messageAppend(messageInput){
 			var messageElement = document.createElement("div")
 			messageElement.innerText = messageInput
 		 	messageWrapper.append(messageElement)
 		}
+		// function appendUsername(data){
+		// 	// var messageElement = document.createElement("div")
+		// 	// messageElement
+			
+
+		// }
 
 			
 		// $(function(){
